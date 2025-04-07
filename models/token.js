@@ -2,14 +2,14 @@
 const mongoose = require('mongoose');
 
 const tokenSchema = new mongoose.Schema({
-  name: String,
-  symbol: String,
-  supply: String,
+  name: { type: String, required: true },
+  symbol: { type: String, required: true },
+  supply: { type: String, required: true },
   tokenStandard: { type: String, default: 'spl-token' },
-  decimals: { type: String, default: '6' },
-  logo: String,
-  imageUploadUrl: String,
-  website: String,
+  decimals: { type: String, required: true },
+  logo: { type: String, required: true },
+  imageUploadUrl: { type: String, required: true },
+  website: { type: String, required: true },
   twitter: String,
   telegram: String,
   discord: String,

@@ -67,6 +67,7 @@ app.get('/api/tokens/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+/*
 
 // Update token
 app.put('/api/tokens/:id', async (req, res) => {
@@ -89,6 +90,7 @@ app.delete('/api/tokens/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+*/
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running on port ${port}`);
