@@ -7,6 +7,7 @@ const tokenSchema = new mongoose.Schema({
   supply: String,
   tokenStandard: { type: String, default: 'spl-token' },
   decimals: { type: String, default: '6' },
+  logo: String,
   imageUploadUrl: String,
   website: String,
   twitter: String,
