@@ -15,7 +15,8 @@ const tokenSchema = new mongoose.Schema({
   reddit: String,
   medium: String,
   description: String,
-  address: String
+  address: String,
+  status: { type: String, enum: ['live', 'upcoming'], default: 'upcoming' }
 });
 
 module.exports = mongoose.model('Token', tokenSchema);
