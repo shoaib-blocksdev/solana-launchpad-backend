@@ -18,24 +18,7 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-const tokenSchema = new mongoose.Schema({
-  name: String,
-  symbol: String,
-  supply: String,
-  tokenStandard: { type: String, default: 'spl-token' },
-  decimals: { type: String, default: '6' },
-  imageUploadUrl: String,
-  website: String,
-  twitter: String,
-  telegram: String,
-  discord: String,
-  reddit: String,
-  medium: String,
-  description: String,
-  address: String
-});
-
-const Token = mongoose.model('Token', tokenSchema);
+const Token = require('./models/token');
 
 // Create token
 app.post('/api/tokens', async (req, res) => {
