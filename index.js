@@ -31,10 +31,20 @@ app.post('/api/tokens', async (req, res) => {
   }
 });
 
-// Get all tokens
+// Get all tokens with search functionality
 app.get('/api/tokens', async (req, res) => {
   try {
-    const tokens = await Token.find();
+    const { status, address } = req.query;
+    let query = {};
+
+    if (status) {
+      query.status = status;
+    }
+    if (address) {
+      query.address = address;
+    }
+
+    const tokens = await Token.find(query);
     res.json(tokens);
   } catch (error) {
     res.status(500).json({ error: error.message });
