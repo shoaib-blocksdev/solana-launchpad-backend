@@ -34,7 +34,7 @@ app.post('/api/tokens', async (req, res) => {
 // Get all tokens with search functionality
 app.get('/api/tokens', async (req, res) => {
   try {
-    const { status, address } = req.query;
+    const { status, address, name, symbol } = req.query;
     let query = {};
 
     if (status) {
@@ -42,6 +42,12 @@ app.get('/api/tokens', async (req, res) => {
     }
     if (address) {
       query.address = address;
+    }
+    if (name) {
+      query.name = { $regex: name, $options: 'i' };
+    }
+    if (symbol) {
+      query.symbol = { $regex: symbol, $options: 'i' };
     }
 
     const tokens = await Token.find(query);
