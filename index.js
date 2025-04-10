@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 app.use(cors({
   origin: '*',
@@ -80,7 +80,7 @@ app.post('/api/tokens', upload.fields([
 // Get all tokens with search functionality
 app.get('/api/tokens', async (req, res) => {
   try {
-    const { status, address, name, symbol } = req.query;
+    const {search, status, token, address, name, symbol} = req.query;
     let query = {};
 
     if (status) {
@@ -89,26 +89,37 @@ app.get('/api/tokens', async (req, res) => {
     if (address) {
       query.address = address;
     }
-    if (name) {
-      query.name = { $regex: name, $options: 'i' };
+    if (token) {
+      query.token = token;
     }
-    if (symbol) {
-      query.symbol = { $regex: symbol, $options: 'i' };
+    if (search) {
+      // search by name or symbol
+      query.$or = [
+        {name: {$regex: search, $options: 'i'}},
+        {symbol: {$regex: search, $options: 'i'}}
+      ];
+    } else {
+      if (name) {
+        query.name = {$regex: name, $options: 'i'};
+      }
+      if (symbol) {
+        query.symbol = {$regex: symbol, $options: 'i'};
+      }
     }
 
     const tokens = await Token.find(query);
-    res.json(tokens);
+    res.status(200).json({data: tokens, status: "success"});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// Get token by ID
-app.get('/api/tokens/:id', async (req, res) => {
+// Get token by token
+app.get('/api/tokens/:token', async (req, res) => {
   try {
-    const token = await Token.findById(req.params.id);
+    const token = await Token.findOne({token: req.params.token});
     if (!token) return res.status(404).json({ error: 'Token not found' });
-    res.json(token);
+    res.status(200).json({data: token, status: "success"});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

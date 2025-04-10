@@ -10,6 +10,7 @@ const tokenSchema = new mongoose.Schema({
   logo: { type: String, required: true },
   imageUploadUrl: { type: String, required: true },
   website: { type: String, required: true },
+  token: { type: String, required: true },
   twitter: String,
   telegram: String,
   discord: String,
