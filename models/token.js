@@ -19,7 +19,7 @@ const tokenSchema = new mongoose.Schema({
   description: String,
   address: String,  
   status: { type: String, enum: ['live', 'upcoming'], default: 'upcoming' },
-  createdAt: { type: Date, default: Date.now } 
+  createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('Token', tokenSchema);

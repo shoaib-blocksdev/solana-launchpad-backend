@@ -106,8 +106,9 @@ app.get('/api/tokens', async (req, res) => {
         query.symbol = {$regex: symbol, $options: 'i'};
       }
     }
-
-    const tokens = await Token.find(query);
+    // order by query
+    
+    const tokens = await Token.find(query).sort({ createdAt: -1 });
     res.status(200).json({data: tokens, status: "success"});
   } catch (error) {
     res.status(500).json({ error: error.message });
